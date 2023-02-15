@@ -7,7 +7,6 @@ import java.util.List;
 @Repository
 public class SuperheroRepo {
 
-    private boolean changeMade = false;
     private List<Superhero> superheroes = List.of(new Superhero("Brian",
             "Laudrupfinten",
             "Brian Laudrup",
@@ -22,11 +21,9 @@ public class SuperheroRepo {
                     250));
 
 
-
-    public void createSuperhero(String superheroName, String superPowers, String realName, int yearCreated, boolean isHuman, double strength) {
-        Superhero superhero = new Superhero(superheroName, superPowers, realName, yearCreated, isHuman, strength);
+    public Superhero createSuperhero(Superhero superhero) {
         superheroes.add(superhero);
-        changeBeenMade();
+        return superhero;
     }
 
     public List<Superhero> getSuperheroes() {
@@ -43,53 +40,22 @@ public class SuperheroRepo {
         return superhero;
     }
 
-    public void editSuperhero(int index, String superheroName, String superPowers, String realName, int yearCreated, boolean isHuman, double strength) {
-        Superhero superhero = superheroes.get(index - 1);
-        if (!superheroName.isEmpty()) {
-            superhero.setSuperheroName(superheroName);
-            changeBeenMade();
+    public Superhero editSuperhero(Superhero superhero) {
+        int i=0;
+        while (i<superheroes.size()) {
+            if (superhero.getSuperheroName() == superheroes.get(i).getSuperheroName()) {
+                superheroes.set(i, superhero);
+                return superhero;
+            }
+            i++;
         }
-
-        if (!superPowers.isEmpty()) {
-            superhero.setSuperPowers(superPowers);
-            changeBeenMade();
-        }
-
-        if (!realName.isEmpty()) {
-            superhero.setRealName(realName);
-            changeBeenMade();
-        }
-
-        if (yearCreated != 0) {
-            superhero.setYearCreated(yearCreated);
-            changeBeenMade();
-        }
-
-        if (strength != 0) {
-            superhero.setStrength(strength);
-            changeBeenMade();
-        }
-
-        superhero.setIsHuman(isHuman);
+        return null;
     }
 
-    public void deleteSuperhero(int index) {
-        Superhero superhero = superheroes.get(index - 1);
-        superheroes.remove(superhero);
-        changeBeenMade();
-    }
-
-    public void changeBeenMade() {
-        changeMade = true;
-    }
-
-    public void changeNotMade() {
-        changeMade = false;
-
-    }
-
-    public boolean getChangeMade() {
-        return changeMade;
+    public Superhero deleteSuperhero(Superhero superhero) {
+        Superhero superheroToRemove = searchSuperhero(superhero.getSuperheroName());
+        superheroes.remove(superheroToRemove);
+        return superheroToRemove;
     }
 
 

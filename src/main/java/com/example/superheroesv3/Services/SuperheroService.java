@@ -14,8 +14,9 @@ public class SuperheroService {
         this.superheroRepo = new SuperheroRepo();
     }
 
-    public void createSuperhero(String superheroName, String superPowers, String realName, int yearCreated, boolean isHuman, double strength) {
-        superheroRepo.createSuperhero(superheroName,superPowers,realName,yearCreated,isHuman,strength);
+
+    public Superhero createSuperhero(Superhero superhero) {
+        return superheroRepo.createSuperhero(superhero);
     }
 
     public List<Superhero> getSuperheroes() {
@@ -26,12 +27,12 @@ public class SuperheroService {
         return superheroRepo.searchSuperhero(superheroName);
     }
 
-    public void editSuperhero(int index, String superheroName, String superPowers, String realName, int yearCreated, boolean isHuman, double strength) {
-        superheroRepo.editSuperhero(index,superheroName,superPowers,realName,yearCreated,isHuman,strength);
+    public Superhero editSuperhero(Superhero superhero) {
+        return superheroRepo.editSuperhero(superhero);
     }
 
-    public void deleteSuperhero(int index) {
-        superheroRepo.deleteSuperhero(index);
+    public Superhero deleteSuperhero(Superhero superhero) {
+        return superheroRepo.deleteSuperhero(superhero);
     }
 
 
