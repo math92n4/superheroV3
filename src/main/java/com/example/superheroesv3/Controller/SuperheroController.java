@@ -2,6 +2,7 @@ package com.example.superheroesv3.Controller;
 
 import com.example.superheroesv3.Model.Superhero;
 import com.example.superheroesv3.Services.SuperheroService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,9 +27,23 @@ public class SuperheroController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<Superhero> searchForSuperhero(@PathVariable String name) {
+    public ResponseEntity<String> searchForSuperhero(@PathVariable String name) {
         Superhero superhero = superheroService.searchSuperhero(name);
-        return new ResponseEntity<>(superhero, HttpStatus.OK);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Content-Type", "text/html");
+
+        return new ResponseEntity<>(
+                "<html><body><h1>" +
+                        superhero.getSuperheroName() +
+                        superhero.getSuperPowers() +
+                        superhero.getRealName() +
+                        superhero.getYearCreated() +
+                        superhero.isHuman() +
+                        superhero.getStrength() +
+                        "</h1><body></html>", responseHeaders, HttpStatus.OK
+        );
+
+        // return new ResponseEntity<>(superhero, HttpStatus.OK);
     }
 
     @PostMapping("/create/")

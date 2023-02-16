@@ -36,7 +36,7 @@ public class Superhero {
         return yearCreated;
     }
 
-    public boolean IsHuman() {
+    public boolean isHuman() {
         return isHuman;
     }
 
