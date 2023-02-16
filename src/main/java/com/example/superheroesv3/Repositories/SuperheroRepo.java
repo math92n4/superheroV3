@@ -7,18 +7,7 @@ import java.util.List;
 @Repository
 public class SuperheroRepo {
 
-    private List<Superhero> superheroes = List.of(new Superhero("Brian",
-            "Laudrupfinten",
-            "Brian Laudrup",
-            1965,
-            true,
-            200),
-            new Superhero("Messi",
-            "Messithings",
-                    "Lionel Messi",
-                    1980,
-                    true,
-                    250));
+    private List<Superhero> superheroes = new ArrayList<>();
 
 
     public Superhero createSuperhero(Superhero superhero) {
@@ -43,7 +32,7 @@ public class SuperheroRepo {
     public Superhero editSuperhero(Superhero superhero) {
         int i=0;
         while (i<superheroes.size()) {
-            if (superhero.getSuperheroName() == superheroes.get(i).getSuperheroName()) {
+            if (superhero.getSuperheroName().equals(superheroes.get(i).getSuperheroName())) {
                 superheroes.set(i, superhero);
                 return superhero;
             }

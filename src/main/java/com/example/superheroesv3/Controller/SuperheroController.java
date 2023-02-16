@@ -31,20 +31,20 @@ public class SuperheroController {
         return new ResponseEntity<>(superhero, HttpStatus.OK);
     }
 
-    @PostMapping("/create")
+    @PostMapping("/create/")
     public ResponseEntity<Superhero> createSuperhero(@RequestBody Superhero superhero) {
         Superhero returnSuperhero = superheroService.createSuperhero(superhero);
         return new ResponseEntity<>(returnSuperhero, HttpStatus.OK);
     }
 
-    @PutMapping("/edit")
+    @PutMapping("/edit/")
     public ResponseEntity<Superhero> editSuperhero(@RequestBody Superhero superhero) {
         Superhero returnSuperhero = superheroService.editSuperhero(superhero);
         return new ResponseEntity<>(returnSuperhero, HttpStatus.OK);
     }
 
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/")
     public ResponseEntity<Superhero> deleteSuperhero(@RequestBody Superhero superhero) {
         Superhero deleteSuperhero = superheroService.deleteSuperhero(superhero);
         return new ResponseEntity<>(deleteSuperhero, HttpStatus.OK);
