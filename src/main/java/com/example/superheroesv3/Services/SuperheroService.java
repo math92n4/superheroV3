@@ -14,7 +14,6 @@ public class SuperheroService {
         this.superheroRepo = new SuperheroRepo();
     }
 
-
     public Superhero createSuperhero(Superhero superhero) {
         return superheroRepo.createSuperhero(superhero);
     }
