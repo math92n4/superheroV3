@@ -21,15 +21,6 @@ public class Superhero {
         this.strength = strength;
     }
 
-    public Superhero(int id, String superheroName, String realName, String yearCreated, String isHuman, double strength) {
-        this.id = id;
-        this.superheroName = superheroName;
-        this.realName = realName;
-        this.yearCreated = yearCreated;
-        this.isHuman = isHuman;
-        this.strength = strength;
-
-    }
 
     public int getId() {
         return id;

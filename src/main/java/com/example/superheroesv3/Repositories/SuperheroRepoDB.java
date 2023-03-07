@@ -1,6 +1,10 @@
 package com.example.superheroesv3.Repositories;
 
 import com.example.superheroesv3.Model.Superhero;
+import com.example.superheroesv3.dto.SuperheroCityDTO;
+import com.example.superheroesv3.dto.SuperheroDTO;
+import com.example.superheroesv3.dto.SuperheroStrengthsDTO;
+import com.example.superheroesv3.dto.SuperheroSuperpowerCountDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class SuperheroRepoDB {
+public class SuperheroRepoDB implements IRepository {
 
     @Value("${spring.datasource.url}")
     private String db_url;
@@ -21,10 +25,102 @@ public class SuperheroRepoDB {
     private String password;
 
     private Connection connectionSQL() throws SQLException {
-        return DriverManager.getConnection(db_url,username,password);
+        return DriverManager.getConnection(db_url, username, password);
     }
 
-    public List<Superhero> getSuperheroes() {
+    @Override
+    public List<SuperheroDTO> getSuperheroes() {
+        List<SuperheroDTO> superheroes = new ArrayList<>();
+        try (Connection con = connectionSQL()) {
+            String SQL = "SELECT * FROM superheroes;";
+            Statement statement = con.createStatement();
+            ResultSet resultset = statement.executeQuery(SQL);
+            while (resultset.next()) {
+                int id = resultset.getInt("id");
+                String superheroName = resultset.getString("superheroName");
+                String realName = resultset.getString("realName");
+                String dateCreated = resultset.getString("dateCreated");
+                superheroes.add(new SuperheroDTO(id, superheroName, realName, dateCreated));
+            }
+            return superheroes;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+        @Override
+        public SuperheroDTO getSuperheroByName(String superheroName){
+            SuperheroDTO superheroByName = null;
+            try (Connection con = connectionSQL()) {
+                String SQL = "SELECT * FROM superheroes WHERE superheroName = ?;";
+                PreparedStatement preparedStatement = con.prepareStatement(SQL);
+                preparedStatement.setString(1,superheroName);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String superheroNameColumn = resultSet.getString("superheroName");
+                    String realName = resultSet.getString("realName");
+                    String dateCreated = resultSet.getString("dateCreated");
+                    superheroByName = new SuperheroDTO(id, superheroNameColumn, realName, dateCreated);
+                }
+                return superheroByName;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @Override
+        public List<SuperheroSuperpowerCountDTO> getSuperheroesPowerCount () {
+        //jeg tror der er noget alvorligt galt med min database, ellers er jeg bare dum som en dør :)
+
+            /*List<SuperheroSuperpowerCountDTO> superheroes = new ArrayList<>();
+            try (Connection con = connectionSQL()) {
+                String SQL = "SELECT id, superheroName, realName, COUNT()???????????? FROM superheroes;";
+                Statement statement = con.createStatement();
+                ResultSet resultset = statement.executeQuery(SQL);
+                while (resultset.next()) {
+                    int id = resultset.getInt("id");
+                    String superheroName = resultset.getString("superheroName");
+                    String realName = resultset.getString("realName");
+                    int superpowerCount = resultset.getInt("")
+                    superheroes.add(new SuperheroSuperpowerCountDTO(??));
+                }
+                return superheroes;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }*/
+            return null;
+        }
+
+        @Override
+        public List<SuperheroSuperpowerCountDTO> getSuperheroByNameAndPowerCount (String superheroName){
+            // implementeres efter getSuperheroesPowerCount er lavet
+            return null;
+        }
+
+        @Override
+        public List<SuperheroStrengthsDTO> getSuperheroWithStrengths () {
+            return null;
+        }
+
+        @Override
+        public List<SuperheroStrengthsDTO> getSuperheroByNameAndWithStrengths (String superheroName){
+            return null;
+        }
+
+        @Override
+        public List<SuperheroCityDTO> getSuperheroAndCity () {
+            return null;
+        }
+
+
+
+
+
+
+
+    /*public List<Superhero> getSuperheroes() {
         List<Superhero> superheroes = new ArrayList<>();
         try (Connection con = connectionSQL()) {
             String SQL = "SELECT * FROM superheroes;";
@@ -43,6 +139,7 @@ public class SuperheroRepoDB {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }*/
+
     }
 
-}

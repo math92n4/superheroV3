@@ -1,8 +1,8 @@
 package com.example.superheroesv3.Services;
 
-import com.example.superheroesv3.Model.Superhero;
-import com.example.superheroesv3.Repositories.SuperheroRepo;
+
 import com.example.superheroesv3.Repositories.SuperheroRepoDB;
+import com.example.superheroesv3.dto.SuperheroDTO;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -15,8 +15,12 @@ public class SuperheroService {
         this.superheroRepoDB = superheroRepoDB;
     }
 
-    public List<Superhero> getSuperheroes() {
+    public List<SuperheroDTO> getSuperheroes() {
         return superheroRepoDB.getSuperheroes();
+    }
+
+    public SuperheroDTO getSuperheroByName(String superheroName) {
+        return superheroRepoDB.getSuperheroByName(superheroName);
     }
 
 
