@@ -2,15 +2,17 @@ package com.example.superheroesv3.Model;
 
 public class Superhero {
 
+    private int id;
     private String superheroName;
     private String superPowers;
     private String realName;
-    private int yearCreated;
-    private boolean isHuman;
+    private String yearCreated;
+    private String isHuman;
     private double strength;
 
 
-    public Superhero(String superheroName,String superPowers,String realName,int yearCreated,boolean isHuman,double strength) {
+    public Superhero(int id, String superheroName,String superPowers,String realName,String yearCreated,String isHuman,double strength) {
+        this.id = id;
         this.superheroName = superheroName;
         this.superPowers = superPowers;
         this.realName = realName;
@@ -19,6 +21,19 @@ public class Superhero {
         this.strength = strength;
     }
 
+    public Superhero(int id, String superheroName, String realName, String yearCreated, String isHuman, double strength) {
+        this.id = id;
+        this.superheroName = superheroName;
+        this.realName = realName;
+        this.yearCreated = yearCreated;
+        this.isHuman = isHuman;
+        this.strength = strength;
+
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public String getSuperheroName() {
         return superheroName;
@@ -32,11 +47,11 @@ public class Superhero {
         return realName;
     }
 
-    public int getYearCreated() {
+    public String getYearCreated() {
         return yearCreated;
     }
 
-    public boolean isHuman() {
+    public String isHuman() {
         return isHuman;
     }
 
@@ -56,11 +71,11 @@ public class Superhero {
         this.realName = realName;
     }
 
-    public void setYearCreated(int yearCreated) {
+    public void setYearCreated(String yearCreated) {
         this.yearCreated = yearCreated;
     }
 
-    public void setIsHuman(boolean isHuman) {
+    public void setIsHuman(String isHuman) {
         this.isHuman = isHuman;
     }
 
