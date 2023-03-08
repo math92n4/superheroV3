@@ -13,7 +13,7 @@ public interface IRepository {
     SuperheroDTO getSuperheroByName(String superheroName);
 
     List<SuperheroSuperpowerCountDTO> getSuperheroesPowerCount();
-    List<SuperheroSuperpowerCountDTO> getSuperheroByNameAndPowerCount(String superheroName);
+    SuperheroSuperpowerCountDTO getSuperheroByNameAndPowerCount(String superheroName);
 
     List<SuperheroStrengthsDTO> getSuperheroWithStrengths();
     List<SuperheroStrengthsDTO> getSuperheroByNameAndWithStrengths(String superheroName);

@@ -36,7 +36,7 @@ public class SuperheroRepoDB implements IRepository {
             Statement statement = con.createStatement();
             ResultSet resultset = statement.executeQuery(SQL);
             while (resultset.next()) {
-                int id = resultset.getInt("id");
+                int id = resultset.getInt("superheroid");
                 String superheroName = resultset.getString("superheroName");
                 String realName = resultset.getString("realName");
                 String dateCreated = resultset.getString("dateCreated");
@@ -58,7 +58,7 @@ public class SuperheroRepoDB implements IRepository {
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 if (resultSet.next()) {
-                    int id = resultSet.getInt("id");
+                    int id = resultSet.getInt("superheroid");
                     String superheroNameColumn = resultSet.getString("superheroName");
                     String realName = resultSet.getString("realName");
                     String dateCreated = resultSet.getString("dateCreated");
@@ -72,31 +72,52 @@ public class SuperheroRepoDB implements IRepository {
 
         @Override
         public List<SuperheroSuperpowerCountDTO> getSuperheroesPowerCount () {
-        //jeg tror der er noget alvorligt galt med min database, ellers er jeg bare dum som en dør :)
 
-            /*List<SuperheroSuperpowerCountDTO> superheroes = new ArrayList<>();
+            List<SuperheroSuperpowerCountDTO> superheroes = new ArrayList<>();
             try (Connection con = connectionSQL()) {
-                String SQL = "SELECT id, superheroName, realName, COUNT()???????????? FROM superheroes;";
+                String SQL = "SELECT superheroes.superheroid, superheroName, realName, COUNT(superhero_superpower.superpowerid) AS count\n" +
+                        "FROM superheroes\n" +
+                        "LEFT JOIN superhero_superpower ON superheroes.superheroid = superhero_superpower.superheroid\n" +
+                        "GROUP BY superheroes.superheroid;";
                 Statement statement = con.createStatement();
                 ResultSet resultset = statement.executeQuery(SQL);
                 while (resultset.next()) {
-                    int id = resultset.getInt("id");
+                    int id = resultset.getInt("superheroid");
                     String superheroName = resultset.getString("superheroName");
                     String realName = resultset.getString("realName");
-                    int superpowerCount = resultset.getInt("")
-                    superheroes.add(new SuperheroSuperpowerCountDTO(??));
+                    int superpowerCount = resultset.getInt("count");
+                    superheroes.add(new SuperheroSuperpowerCountDTO(id,superheroName,realName,superpowerCount));
                 }
                 return superheroes;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
-            }*/
-            return null;
+            }
         }
 
         @Override
-        public List<SuperheroSuperpowerCountDTO> getSuperheroByNameAndPowerCount (String superheroName){
-            // implementeres efter getSuperheroesPowerCount er lavet
-            return null;
+        public SuperheroSuperpowerCountDTO getSuperheroByNameAndPowerCount(String superheroName) {
+            SuperheroSuperpowerCountDTO superheroByName = null;
+            try (Connection con = connectionSQL()){
+                String SQL = "SELECT superheroes.superheroid, superheroName, realName, COUNT(superhero_superpower.superpowerid) AS count\n" +
+                        "FROM superheroes\n" +
+                        "LEFT JOIN superhero_superpower ON superheroes.superheroid = superhero_superpower.superheroid\n" +
+                        "WHERE superheroName = ? \n" +
+                        "GROUP BY superheroes.superheroid;";
+                PreparedStatement preparedStatement = con.prepareStatement(SQL);
+                preparedStatement.setString(1,superheroName);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    int id = resultSet.getInt("superheroid");
+                    String superheroNameColumn = resultSet.getString("superheroName");
+                    String realName = resultSet.getString("realName");
+                    int superpowerCount = resultSet.getInt("count");
+                    superheroByName = new SuperheroSuperpowerCountDTO(id, superheroNameColumn,realName,superpowerCount);
+                }
+                return superheroByName;
+            } catch (SQLException e) {
+                throw new RuntimeException();
+            }
+
         }
 
         @Override
