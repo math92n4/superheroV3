@@ -201,7 +201,6 @@ public class SuperheroRepoDB implements IRepository {
         @Override
         public List<SuperheroCityDTO> getSuperheroAndCity () {
             List <SuperheroCityDTO> cities = new ArrayList<>();
-            SuperheroDTO superheroDTO = null;
 
             try (Connection con = connectionSQL()) {
                 String SQL = "SELECT city, superheroes.superheroid, superheroName, realname, datecreated from superheroes\n" +
@@ -214,25 +213,22 @@ public class SuperheroRepoDB implements IRepository {
 
                 while(resultSet.next()) {
                     String cityName = resultSet.getString("city");
-                    int id = resultSet.getInt("superheroid");
-                    String superheroName = resultSet.getString("superheroName");
-                    String realName = resultSet.getString("realName");
-                    String dateCreated = resultSet.getString("dateCreated");
-                    superheroDTO = new SuperheroDTO(id, superheroName, realName, dateCreated);
-
+                    SuperheroDTO superheroDTO = new SuperheroDTO(resultSet.getInt("superheroid"),
+                            resultSet.getString("superheroName"),
+                            resultSet.getString("realName"),
+                            resultSet.getString("dateCreated"));
+                    City city = new City(cityName);
                     if (cityName.equals(currentCityName)) {
                         currentDto.addHero(superheroDTO);
                     } else {
-                        City city = new City(cityName);
-                        currentDto = new SuperheroCityDTO(city,new ArrayList<>(List.of(superheroDTO)));
+                        currentDto = new SuperheroCityDTO(city, new ArrayList<>(List.of(superheroDTO)));
                         currentCityName = cityName;
                     }
                     if (!cities.contains(currentDto)) {
                         cities.add(currentDto);
                     }
                 }
-            }
-            catch (SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             return cities;
