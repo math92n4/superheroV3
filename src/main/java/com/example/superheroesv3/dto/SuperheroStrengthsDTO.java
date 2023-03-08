@@ -1,19 +1,26 @@
 package com.example.superheroesv3.dto;
 
+import com.example.superheroesv3.Model.Superpower;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class SuperheroStrengthsDTO {
 
     private int id;
     private String superheroName;
     private String realName;
-    private ArrayList<String> superpowers;
+    private List<Superpower> superpowers;
 
-    public SuperheroStrengthsDTO(int id, String superheroName, String realName, ArrayList<String> superpowers) {
+    public SuperheroStrengthsDTO(int id, String superheroName, String realName, List<Superpower> superpowers) {
         this.id = id;
         this.superheroName = superheroName;
         this.realName = realName;
         this.superpowers = superpowers;
+    }
+
+    public void addPower(Superpower superpower) {
+        superpowers.add(superpower);
     }
 
     public int getId() {
@@ -28,7 +35,7 @@ public class SuperheroStrengthsDTO {
         return realName;
     }
 
-    public ArrayList<String> getSuperpowers() {
+    public List<Superpower> getSuperpowers() {
         return superpowers;
     }
 }

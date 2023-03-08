@@ -3,6 +3,7 @@ package com.example.superheroesv3.Services;
 
 import com.example.superheroesv3.Repositories.SuperheroRepoDB;
 import com.example.superheroesv3.dto.SuperheroDTO;
+import com.example.superheroesv3.dto.SuperheroStrengthsDTO;
 import com.example.superheroesv3.dto.SuperheroSuperpowerCountDTO;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -30,6 +31,14 @@ public class SuperheroService {
 
     public SuperheroSuperpowerCountDTO getSuperheroByNameAndPowerCount(String superheroName) {
         return superheroRepoDB.getSuperheroByNameAndPowerCount(superheroName);
+    }
+
+    public List<SuperheroStrengthsDTO> getSuperheroWithStrengths () {
+        return superheroRepoDB.getSuperheroWithStrengths();
+    }
+
+    public List<SuperheroStrengthsDTO> getSuperheroByNameAndWithStrengths(String superheroName) {
+        return superheroRepoDB.getSuperheroByNameAndWithStrengths(superheroName);
     }
 
 

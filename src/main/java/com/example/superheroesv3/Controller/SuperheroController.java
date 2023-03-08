@@ -3,6 +3,7 @@ package com.example.superheroesv3.Controller;
 import com.example.superheroesv3.Model.Superhero;
 import com.example.superheroesv3.Services.SuperheroService;
 import com.example.superheroesv3.dto.SuperheroDTO;
+import com.example.superheroesv3.dto.SuperheroStrengthsDTO;
 import com.example.superheroesv3.dto.SuperheroSuperpowerCountDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,18 @@ public class SuperheroController {
     public ResponseEntity<SuperheroSuperpowerCountDTO> getSuperheroByNameAndPowerCount(@PathVariable String name) {
         SuperheroSuperpowerCountDTO superhero = superheroService.getSuperheroByNameAndPowerCount(name);
         return new ResponseEntity<>(superhero, HttpStatus.OK);
+    }
+
+    @GetMapping("/superpower")
+    public ResponseEntity<List<SuperheroStrengthsDTO>> getSuperheroWithStrengths() {
+        List superheroWithStrengths = superheroService.getSuperheroWithStrengths();
+        return new ResponseEntity<List<SuperheroStrengthsDTO>>(superheroWithStrengths,HttpStatus.OK);
+    }
+
+    @GetMapping("/superpower/{name}")
+    public ResponseEntity<List<SuperheroStrengthsDTO>> getSuperheroByNameAndWithStrengths(@PathVariable String name) {
+        List superheroByNameAndWithStrengths = superheroService.getSuperheroByNameAndWithStrengths(name);
+        return new ResponseEntity<List<SuperheroStrengthsDTO>>(superheroByNameAndWithStrengths,HttpStatus.OK);
     }
 
     /*@PostMapping("/create/")
