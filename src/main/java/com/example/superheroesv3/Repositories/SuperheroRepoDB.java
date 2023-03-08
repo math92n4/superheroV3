@@ -1,5 +1,6 @@
 package com.example.superheroesv3.Repositories;
 
+import com.example.superheroesv3.Model.City;
 import com.example.superheroesv3.Model.Superhero;
 import com.example.superheroesv3.Model.Superpower;
 import com.example.superheroesv3.dto.SuperheroCityDTO;
@@ -199,7 +200,42 @@ public class SuperheroRepoDB implements IRepository {
 
         @Override
         public List<SuperheroCityDTO> getSuperheroAndCity () {
-            return null;
+            List <SuperheroCityDTO> cities = new ArrayList<>();
+            SuperheroDTO superheroDTO = null;
+
+            try (Connection con = connectionSQL()) {
+                String SQL = "SELECT city, superheroes.superheroid, superheroName, realname, datecreated from superheroes\n" +
+                        "INNER JOIN cities ON superheroes.cityid = cities.cityid;";
+                PreparedStatement preparedStatement = con.prepareStatement(SQL);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                String currentCityName = "";
+                SuperheroCityDTO currentDto = null;
+
+                while(resultSet.next()) {
+                    String cityName = resultSet.getString("city");
+                    int id = resultSet.getInt("superheroid");
+                    String superheroName = resultSet.getString("superheroName");
+                    String realName = resultSet.getString("realName");
+                    String dateCreated = resultSet.getString("dateCreated");
+                    superheroDTO = new SuperheroDTO(id, superheroName, realName, dateCreated);
+
+                    if (cityName.equals(currentCityName)) {
+                        currentDto.addHero(superheroDTO);
+                    } else {
+                        City city = new City(cityName);
+                        currentDto = new SuperheroCityDTO(city,new ArrayList<>(List.of(superheroDTO)));
+                        currentCityName = cityName;
+                    }
+                    if (!cities.contains(currentDto)) {
+                        cities.add(currentDto);
+                    }
+                }
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return cities;
         }
 
 

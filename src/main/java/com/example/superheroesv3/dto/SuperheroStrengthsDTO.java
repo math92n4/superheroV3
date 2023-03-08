@@ -2,7 +2,6 @@ package com.example.superheroesv3.dto;
 
 import com.example.superheroesv3.Model.Superpower;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SuperheroStrengthsDTO {

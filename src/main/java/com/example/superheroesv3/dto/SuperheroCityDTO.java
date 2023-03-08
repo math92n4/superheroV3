@@ -1,29 +1,29 @@
 package com.example.superheroesv3.dto;
 
+import com.example.superheroesv3.Model.City;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class SuperheroCityDTO {
 
-    private int id;
-    private String city;
-    private ArrayList<String> superheroNames;
+    private City city;
+    private List<SuperheroDTO> superheroes;
 
-    public SuperheroCityDTO(int id, ArrayList<String> superheroNames, String city) {
-        this.id = id;
-        this.superheroNames = superheroNames;
+    public SuperheroCityDTO(City city, ArrayList<SuperheroDTO> superheroes) {
         this.city = city;
+        this.superheroes = superheroes;
     }
 
-    public int getId() {
-        return id;
+    public void addHero(SuperheroDTO superhero) {
+        superheroes.add(superhero);
     }
 
-    public ArrayList<String> getSuperheroNames() {
-        return superheroNames;
-    }
-
-    public String getCity() {
+    public City getCity() {
         return city;
+    }
+
+    public List<SuperheroDTO> getSuperheroes() {
+        return superheroes;
     }
 }

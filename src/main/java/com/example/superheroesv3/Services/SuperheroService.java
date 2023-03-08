@@ -2,6 +2,7 @@ package com.example.superheroesv3.Services;
 
 
 import com.example.superheroesv3.Repositories.SuperheroRepoDB;
+import com.example.superheroesv3.dto.SuperheroCityDTO;
 import com.example.superheroesv3.dto.SuperheroDTO;
 import com.example.superheroesv3.dto.SuperheroStrengthsDTO;
 import com.example.superheroesv3.dto.SuperheroSuperpowerCountDTO;
@@ -39,6 +40,10 @@ public class SuperheroService {
 
     public List<SuperheroStrengthsDTO> getSuperheroByNameAndWithStrengths(String superheroName) {
         return superheroRepoDB.getSuperheroByNameAndWithStrengths(superheroName);
+    }
+
+    public List<SuperheroCityDTO> getSuperheroAndCity() {
+        return superheroRepoDB.getSuperheroAndCity();
     }
 
 

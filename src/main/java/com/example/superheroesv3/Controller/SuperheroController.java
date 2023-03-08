@@ -2,6 +2,7 @@ package com.example.superheroesv3.Controller;
 
 import com.example.superheroesv3.Model.Superhero;
 import com.example.superheroesv3.Services.SuperheroService;
+import com.example.superheroesv3.dto.SuperheroCityDTO;
 import com.example.superheroesv3.dto.SuperheroDTO;
 import com.example.superheroesv3.dto.SuperheroStrengthsDTO;
 import com.example.superheroesv3.dto.SuperheroSuperpowerCountDTO;
@@ -57,6 +58,12 @@ public class SuperheroController {
     public ResponseEntity<List<SuperheroStrengthsDTO>> getSuperheroByNameAndWithStrengths(@PathVariable String name) {
         List superheroByNameAndWithStrengths = superheroService.getSuperheroByNameAndWithStrengths(name);
         return new ResponseEntity<List<SuperheroStrengthsDTO>>(superheroByNameAndWithStrengths,HttpStatus.OK);
+    }
+
+    @GetMapping("/city")
+    public ResponseEntity<List<SuperheroCityDTO>> getSuperheroAndCity() {
+        List superheroAndCity = superheroService.getSuperheroAndCity();
+        return new ResponseEntity<List<SuperheroCityDTO>>(superheroAndCity, HttpStatus.OK);
     }
 
     /*@PostMapping("/create/")
