@@ -1,7 +1,5 @@
 package com.example.superheroesv3.Repositories;
 
-import com.example.superheroesv3.Model.City;
-import com.example.superheroesv3.Model.Superhero;
 import com.example.superheroesv3.Model.Superpower;
 import com.example.superheroesv3.dto.SuperheroCityDTO;
 import com.example.superheroesv3.dto.SuperheroDTO;
@@ -196,37 +194,26 @@ public class SuperheroRepoDB implements IRepository {
 
         @Override
         public List<SuperheroCityDTO> getSuperheroAndCity () {
-            List <SuperheroCityDTO> cities = new ArrayList<>();
+            List <SuperheroCityDTO> superheroCityDTOS = new ArrayList<>();
 
             try (Connection con = connectionSQL()) {
-                String SQL = "SELECT city, superheroes.superheroid, superheroName, realname, datecreated from superheroes\n" +
+                String SQL = "SELECT city, superheroName, realname, datecreated from superheroes\n" +
                         "INNER JOIN cities ON superheroes.cityid = cities.cityid;";
                 PreparedStatement preparedStatement = con.prepareStatement(SQL);
                 ResultSet resultSet = preparedStatement.executeQuery();
 
-                String currentCityName = "";
-                SuperheroCityDTO currentDto = null;
-
                 while(resultSet.next()) {
-                    String cityName = resultSet.getString("city");
-                    SuperheroDTO superheroDTO = new SuperheroDTO(resultSet.getInt("superheroid"),
+                    SuperheroCityDTO superheroCityDTO = new SuperheroCityDTO(resultSet.getString("city"),
                             resultSet.getString("superheroName"),
                             resultSet.getString("realName"),
                             resultSet.getString("dateCreated"));
-                    City city = new City(cityName);
-                    if (cityName.equals(currentCityName)) {
-                        currentDto.addHero(superheroDTO);
-                    } else {
-                        currentDto = new SuperheroCityDTO(city, new ArrayList<>(List.of(superheroDTO)));
-                        currentCityName = cityName;
-                    }
-                    if (!cities.contains(currentDto))
-                    cities.add(currentDto);
+                    superheroCityDTOS.add(superheroCityDTO);
+
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return cities;
+            return superheroCityDTOS;
         }
 
         @Override
@@ -234,7 +221,7 @@ public class SuperheroRepoDB implements IRepository {
             SuperheroCityDTO superheroCityDTO = null;
 
             try (Connection con = connectionSQL()) {
-                String SQL = "SELECT city, superheroes.superheroid, superheroName, realname, datecreated from superheroes\n" +
+                String SQL = "SELECT city, superheroName, realname, datecreated from superheroes\n" +
                         "INNER JOIN cities ON superheroes.cityid = cities.cityid\n" +
                         "WHERE city = ?;";
 
@@ -243,15 +230,13 @@ public class SuperheroRepoDB implements IRepository {
                 ResultSet resultSet = preparedStatement.executeQuery();
 
 
-                while (resultSet.next()) {
-                    City city = new City(resultSet.getString("city"));
-                    SuperheroDTO superheroDTO = new SuperheroDTO(resultSet.getInt("superheroid"),
+                if (resultSet.next()) {
+                    superheroCityDTO = new SuperheroCityDTO(resultSet.getString("city"),
                             resultSet.getString("superheroName"),
                             resultSet.getString("realName"),
-                            resultSet.getString("datecreated"));
-                    superheroCityDTO = new SuperheroCityDTO(city,new ArrayList<>(List.of(superheroDTO)));
-                }
+                            resultSet.getString("dateCreated"));
 
+                }
 
 
             } catch (SQLException e) {
