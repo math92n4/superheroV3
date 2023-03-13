@@ -1,15 +1,14 @@
 package com.example.superheroesv3.Controller;
 
-import com.example.superheroesv3.Model.Superhero;
 import com.example.superheroesv3.Services.SuperheroService;
 import com.example.superheroesv3.dto.SuperheroCityDTO;
 import com.example.superheroesv3.dto.SuperheroDTO;
 import com.example.superheroesv3.dto.SuperheroStrengthsDTO;
 import com.example.superheroesv3.dto.SuperheroSuperpowerCountDTO;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,9 +24,10 @@ public class SuperheroController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Superhero>> getListOfSuperheroes() {
+    public String getListOfSuperheroes(Model model) {
         List listOfSuperheroes = superheroService.getSuperheroes();
-        return new ResponseEntity<List<Superhero>>(listOfSuperheroes, HttpStatus.OK);
+        model.addAttribute("superheroes",listOfSuperheroes);
+        return "superheroes";
     }
 
     @GetMapping("/{name}")
