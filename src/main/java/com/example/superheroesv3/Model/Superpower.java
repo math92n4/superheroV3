@@ -2,13 +2,13 @@ package com.example.superheroesv3.Model;
 
 public class Superpower {
 
-    private String name;
+    private String superPower;
 
-    public Superpower(String name) {
-        this.name = name;
+    public Superpower(String superPower) {
+        this.superPower = superPower;
     }
 
-    public String getName() {
-        return name;
+    public String getSuperPower() {
+        return superPower;
     }
 }

@@ -66,6 +66,12 @@ public class SuperheroController {
         return new ResponseEntity<List<SuperheroCityDTO>>(superheroAndCity, HttpStatus.OK);
     }
 
+    @GetMapping("/city/{name}")
+    public ResponseEntity<SuperheroCityDTO> getSuperheroAndCityByName(@PathVariable String name) {
+        SuperheroCityDTO cityByName = superheroService.getSuperheroAndCityByName(name);
+        return new ResponseEntity<>(cityByName,HttpStatus.OK);
+    }
+
     /*@PostMapping("/create/")
     public ResponseEntity<Superhero> createSuperhero(@RequestBody Superhero superhero) {
         Superhero returnSuperhero = superheroService.createSuperhero(superhero);

@@ -38,11 +38,10 @@ public class SuperheroRepoDB implements IRepository {
             Statement statement = con.createStatement();
             ResultSet resultset = statement.executeQuery(SQL);
             while (resultset.next()) {
-                int id = resultset.getInt("superheroid");
-                String superheroName = resultset.getString("superheroName");
-                String realName = resultset.getString("realName");
-                String dateCreated = resultset.getString("dateCreated");
-                superheroes.add(new SuperheroDTO(id, superheroName, realName, dateCreated));
+                superheroes.add(new SuperheroDTO(resultset.getInt("superheroid"),
+                        resultset.getString("superheroName"),
+                        resultset.getString("realName"),
+                        resultset.getString("dateCreated")));
             }
             return superheroes;
         } catch (SQLException e) {
@@ -60,11 +59,10 @@ public class SuperheroRepoDB implements IRepository {
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 if (resultSet.next()) {
-                    int id = resultSet.getInt("superheroid");
-                    String superheroNameColumn = resultSet.getString("superheroName");
-                    String realName = resultSet.getString("realName");
-                    String dateCreated = resultSet.getString("dateCreated");
-                    superheroByName = new SuperheroDTO(id, superheroNameColumn, realName, dateCreated);
+                    superheroByName = new SuperheroDTO(resultSet.getInt(("superheroid")),
+                            resultSet.getString("superheroName"),
+                            resultSet.getString("realName"),
+                            resultSet.getString("dateCreated"));
                 }
                 return superheroByName;
             } catch (SQLException e) {
@@ -84,11 +82,10 @@ public class SuperheroRepoDB implements IRepository {
                 Statement statement = con.createStatement();
                 ResultSet resultset = statement.executeQuery(SQL);
                 while (resultset.next()) {
-                    int id = resultset.getInt("superheroid");
-                    String superheroName = resultset.getString("superheroName");
-                    String realName = resultset.getString("realName");
-                    int superpowerCount = resultset.getInt("count");
-                    superheroes.add(new SuperheroSuperpowerCountDTO(id,superheroName,realName,superpowerCount));
+                    superheroes.add(new SuperheroSuperpowerCountDTO(resultset.getInt("superheroid"),
+                            resultset.getString("superheroName"),
+                            resultset.getString("realName"),
+                            resultset.getInt("count")));
                 }
                 return superheroes;
             } catch (SQLException e) {
@@ -109,11 +106,10 @@ public class SuperheroRepoDB implements IRepository {
                 preparedStatement.setString(1,superheroName);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
-                    int id = resultSet.getInt("superheroid");
-                    String superheroNameColumn = resultSet.getString("superheroName");
-                    String realName = resultSet.getString("realName");
-                    int superpowerCount = resultSet.getInt("count");
-                    superheroByName = new SuperheroSuperpowerCountDTO(id, superheroNameColumn,realName,superpowerCount);
+                    superheroByName = new SuperheroSuperpowerCountDTO(resultSet.getInt("superheroid"),
+                            resultSet.getString("superheroName"),
+                            resultSet.getString("realName"),
+                            resultSet.getInt("count"));
                 }
                 return superheroByName;
             } catch (SQLException e) {
@@ -224,14 +220,44 @@ public class SuperheroRepoDB implements IRepository {
                         currentDto = new SuperheroCityDTO(city, new ArrayList<>(List.of(superheroDTO)));
                         currentCityName = cityName;
                     }
-                    if (!cities.contains(currentDto)) {
-                        cities.add(currentDto);
-                    }
+                    if (!cities.contains(currentDto))
+                    cities.add(currentDto);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             return cities;
+        }
+
+        @Override
+        public SuperheroCityDTO getSuperheroAndCityByName(String name) {
+            SuperheroCityDTO superheroCityDTO = null;
+
+            try (Connection con = connectionSQL()) {
+                String SQL = "SELECT city, superheroes.superheroid, superheroName, realname, datecreated from superheroes\n" +
+                        "INNER JOIN cities ON superheroes.cityid = cities.cityid\n" +
+                        "WHERE city = ?;";
+
+                PreparedStatement preparedStatement = con.prepareStatement(SQL);
+                preparedStatement.setString(1,name);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+
+                while (resultSet.next()) {
+                    City city = new City(resultSet.getString("city"));
+                    SuperheroDTO superheroDTO = new SuperheroDTO(resultSet.getInt("superheroid"),
+                            resultSet.getString("superheroName"),
+                            resultSet.getString("realName"),
+                            resultSet.getString("datecreated"));
+                    superheroCityDTO = new SuperheroCityDTO(city,new ArrayList<>(List.of(superheroDTO)));
+                }
+
+
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return superheroCityDTO;
         }
 
 

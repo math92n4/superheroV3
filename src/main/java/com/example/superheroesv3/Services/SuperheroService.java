@@ -46,6 +46,10 @@ public class SuperheroService {
         return superheroRepoDB.getSuperheroAndCity();
     }
 
+    public SuperheroCityDTO getSuperheroAndCityByName(String name) {
+        return superheroRepoDB.getSuperheroAndCityByName(name);
+    }
+
 
    /* public Superhero createSuperhero(Superhero superhero) {
         return superheroRepoDB.createSuperhero(superhero);

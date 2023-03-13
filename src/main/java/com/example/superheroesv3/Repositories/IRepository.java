@@ -20,4 +20,6 @@ public interface IRepository {
 
     List<SuperheroCityDTO> getSuperheroAndCity();
 
+    SuperheroCityDTO getSuperheroAndCityByName(String cityName);
+
 }
