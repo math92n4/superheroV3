@@ -72,17 +72,5 @@ public class SuperheroController {
         return new ResponseEntity<>(cityByName,HttpStatus.OK);
     }
 
-    /*@PostMapping("/create/")
-    public ResponseEntity<Superhero> createSuperhero(@RequestBody Superhero superhero) {
-        Superhero returnSuperhero = superheroService.createSuperhero(superhero);
-        return new ResponseEntity<>(returnSuperhero, HttpStatus.OK);
-    }
-
-    @PutMapping("/edit/")
-    public ResponseEntity<Superhero> editSuperhero(@RequestBody Superhero superhero) {
-        Superhero returnSuperhero = superheroService.editSuperhero(superhero);
-        return new ResponseEntity<>(returnSuperhero, HttpStatus.OK);
-    }*/
-
 
 }
