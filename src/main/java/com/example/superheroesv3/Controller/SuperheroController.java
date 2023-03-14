@@ -67,9 +67,9 @@ public class SuperheroController {
     }
 
     @GetMapping("/city/{name}")
-    public ResponseEntity<SuperheroCityDTO> getSuperheroAndCityByName(@PathVariable String name) {
-        SuperheroCityDTO cityByName = superheroService.getSuperheroAndCityByName(name);
-        return new ResponseEntity<>(cityByName,HttpStatus.OK);
+    public ResponseEntity<List<SuperheroCityDTO>> getSuperheroAndCityByName(@PathVariable String name) {
+        List cityByName = superheroService.getSuperheroAndCityByName(name);
+        return new ResponseEntity<List<SuperheroCityDTO>>(cityByName,HttpStatus.OK);
     }
 
 

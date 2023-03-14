@@ -217,8 +217,9 @@ public class SuperheroRepoDB implements IRepository {
         }
 
         @Override
-        public SuperheroCityDTO getSuperheroAndCityByName(String name) {
+        public List<SuperheroCityDTO> getSuperheroAndCityByName(String name) {
             SuperheroCityDTO superheroCityDTO = null;
+            List<SuperheroCityDTO> superheroesAndCities = new ArrayList<>();
 
             try (Connection con = connectionSQL()) {
                 String SQL = "SELECT city, superheroName, realname, datecreated from superheroes\n" +
@@ -230,47 +231,20 @@ public class SuperheroRepoDB implements IRepository {
                 ResultSet resultSet = preparedStatement.executeQuery();
 
 
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                     superheroCityDTO = new SuperheroCityDTO(resultSet.getString("city"),
                             resultSet.getString("superheroName"),
                             resultSet.getString("realName"),
                             resultSet.getString("dateCreated"));
-
+                    superheroesAndCities.add(superheroCityDTO);
                 }
 
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return superheroCityDTO;
+            return superheroesAndCities;
         }
-
-
-
-
-
-
-
-    /*public List<Superhero> getSuperheroes() {
-        List<Superhero> superheroes = new ArrayList<>();
-        try (Connection con = connectionSQL()) {
-            String SQL = "SELECT * FROM superheroes;";
-            Statement statement = con.createStatement();
-            ResultSet resultset = statement.executeQuery(SQL);
-            while (resultset.next()) {
-                int id = resultset.getInt("id");
-                String superheroName = resultset.getString("superheroName");
-                String realName = resultset.getString("realName");
-                String dateCreated = resultset.getString("dateCreated");
-                String isHuman = resultset.getString("isHuman");
-                double strength = resultset.getDouble("strength");
-                superheroes.add(new Superhero(id,superheroName,realName,dateCreated,isHuman,strength));
-            }
-            return superheroes;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
 
     }
 

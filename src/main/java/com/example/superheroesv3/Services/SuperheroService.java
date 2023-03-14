@@ -46,28 +46,9 @@ public class SuperheroService {
         return superheroRepoDB.getSuperheroAndCity();
     }
 
-    public SuperheroCityDTO getSuperheroAndCityByName(String name) {
+    public List<SuperheroCityDTO> getSuperheroAndCityByName(String name) {
         return superheroRepoDB.getSuperheroAndCityByName(name);
     }
-
-
-   /* public Superhero createSuperhero(Superhero superhero) {
-        return superheroRepoDB.createSuperhero(superhero);
-    }
-
-    public Superhero searchSuperhero(String superheroName) {
-        return superheroRepoDB.searchSuperhero(superheroName);
-    }
-
-    public Superhero editSuperhero(Superhero superhero) {
-        return superheroRepoDB.editSuperhero(superhero);
-    }
-
-    public Superhero deleteSuperhero(Superhero superhero) {
-        return superheroRepoDB.deleteSuperhero(superhero);
-    }*/
-
-
 
 
 
