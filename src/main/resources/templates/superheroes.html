@@ -13,6 +13,7 @@
         <th scope="col">Name</th>
         <th scope="col">Real name</th>
         <th scope="col">Date created</th>
+        <th scope="col">Powers</th>
     </tr>
     </thead>
     <tbody>
@@ -21,11 +22,13 @@
         <td th:text="${superheroDTO.superheroName}"></td>
         <td th:text="${superheroDTO.realName}"></td>
         <td th:text="${superheroDTO.yearCreated}"></td>
+        <td> <button type="button">Powers</button> </td>
     </tr>
     </tbody>
 
-
 </table>
+
+<button type="button"> Create superhero </button>
 
 </body>
 </html>

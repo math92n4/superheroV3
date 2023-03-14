@@ -11,4 +11,9 @@ public class Superpower {
     public String getSuperPower() {
         return superPower;
     }
+
+    @Override
+    public String toString() {
+        return this.superPower;
+    }
 }

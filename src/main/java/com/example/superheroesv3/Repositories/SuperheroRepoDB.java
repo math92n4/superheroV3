@@ -189,7 +189,7 @@ public class SuperheroRepoDB implements IRepository {
                 e.printStackTrace();
             }
             return superheroes;
-    }
+        }
 
 
         @Override

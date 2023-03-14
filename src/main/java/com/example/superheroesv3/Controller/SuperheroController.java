@@ -60,7 +60,7 @@ public class SuperheroController {
 
     @GetMapping("/superpower/{name}")
     public String getSuperheroByNameAndWithStrengths(@PathVariable String name, Model model) {
-        List superheroByNameAndWithStrengths = superheroService.getSuperheroByNameAndWithStrengths(name);
+        List<SuperheroStrengthsDTO> superheroByNameAndWithStrengths = superheroService.getSuperheroByNameAndWithStrengths(name);
         model.addAttribute("superpower", superheroByNameAndWithStrengths);
         return "superpower";
     }
