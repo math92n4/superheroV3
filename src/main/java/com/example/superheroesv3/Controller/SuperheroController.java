@@ -31,45 +31,52 @@ public class SuperheroController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<SuperheroDTO> getSuperheroByName(@PathVariable String name) {
+    public String getSuperheroByName(@PathVariable String name, Model model) {
         SuperheroDTO superhero = superheroService.getSuperheroByName(name);
-        return new ResponseEntity<>(superhero, HttpStatus.OK);
+        model.addAttribute("superheroes",superhero);
+        return "superheroes";
     }
 
     @GetMapping("/superpower/count")
-    public ResponseEntity<List<SuperheroSuperpowerCountDTO>> getSuperheroesPowerCount() {
+    public String getSuperheroesPowerCount(Model model) {
         List superheroPowersCount = superheroService.getSuperheroesPowerCount();
-        return new ResponseEntity<List<SuperheroSuperpowerCountDTO>>(superheroPowersCount,HttpStatus.OK);
+        model.addAttribute("powercount", superheroPowersCount);
+        return "powercount";
     }
 
     @GetMapping("/superpower/count/{name}")
-    public ResponseEntity<SuperheroSuperpowerCountDTO> getSuperheroByNameAndPowerCount(@PathVariable String name) {
+    public String getSuperheroByNameAndPowerCount(@PathVariable String name, Model model) {
         SuperheroSuperpowerCountDTO superhero = superheroService.getSuperheroByNameAndPowerCount(name);
-        return new ResponseEntity<>(superhero, HttpStatus.OK);
+        model.addAttribute("powercount", superhero);
+        return "powercount";
     }
 
     @GetMapping("/superpower")
-    public ResponseEntity<List<SuperheroStrengthsDTO>> getSuperheroWithStrengths() {
+    public String getSuperheroWithStrengths(Model model) {
         List superheroWithStrengths = superheroService.getSuperheroWithStrengths();
-        return new ResponseEntity<List<SuperheroStrengthsDTO>>(superheroWithStrengths,HttpStatus.OK);
+        model.addAttribute("superpower", superheroWithStrengths);
+        return "superpower";
     }
 
     @GetMapping("/superpower/{name}")
-    public ResponseEntity<List<SuperheroStrengthsDTO>> getSuperheroByNameAndWithStrengths(@PathVariable String name) {
+    public String getSuperheroByNameAndWithStrengths(@PathVariable String name, Model model) {
         List superheroByNameAndWithStrengths = superheroService.getSuperheroByNameAndWithStrengths(name);
-        return new ResponseEntity<List<SuperheroStrengthsDTO>>(superheroByNameAndWithStrengths,HttpStatus.OK);
+        model.addAttribute("superpower", superheroByNameAndWithStrengths);
+        return "superpower";
     }
 
     @GetMapping("/city")
-    public ResponseEntity<List<SuperheroCityDTO>> getSuperheroAndCity() {
+    public String getSuperheroAndCity(Model model) {
         List superheroAndCity = superheroService.getSuperheroAndCity();
-        return new ResponseEntity<List<SuperheroCityDTO>>(superheroAndCity, HttpStatus.OK);
+        model.addAttribute("city", superheroAndCity);
+        return "city";
     }
 
     @GetMapping("/city/{name}")
-    public ResponseEntity<List<SuperheroCityDTO>> getSuperheroAndCityByName(@PathVariable String name) {
+    public String getSuperheroAndCityByName(@PathVariable String name, Model model) {
         List cityByName = superheroService.getSuperheroAndCityByName(name);
-        return new ResponseEntity<List<SuperheroCityDTO>>(cityByName,HttpStatus.OK);
+        model.addAttribute("city", cityByName);
+        return "city";
     }
 
 
